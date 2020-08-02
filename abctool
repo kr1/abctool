@@ -41,6 +41,8 @@ external_functionality['iconv'] = 'converting incoding'
 external_programs['pdftk'] = 'pdftk'
 external_functionality['pdftk'] = 'adding correct title to PDF files'
 
+external_programs['exiftool'] = 'exiftool'
+external_functionality['exiftool'] = 'adding correct title to PDF files'
 """
 latin = 'ISO-8859'
 
@@ -1145,36 +1147,12 @@ used to display PostScript and abc2abc is used to transpose
         f.close()
 
     def addTitleToPdf(self,pdfFileName):
-        path = self.searchPath(external_programs['pdftk'])
+        path = self.searchPath(external_programs['exiftool'])
         if path == None:
             return
         title = self.getTitle()
-        infoTmpFile = tempfile.mktemp()
-        pdfTmpFile = tempfile.mktemp()
-        os.system('pdftk "' + pdfFileName + '" dump_data_utf8 output ' + infoTmpFile)
-        newInfo = []
-        titleIsNext = False
-        info = self.file2string(infoTmpFile).split('\n')
-        for line in info:
-            if titleIsNext:
-                line = line.split(':')
-                line[1] = ' ' + title
-                line = ':'.join(line)
-                newInfo.append(line)
-                titleIsNext = False
-            else:
-                newInfo.append(line)
-            if 'InfoKey:' in line and 'Title' in line:
-                titleIsNext = True
+        os.system('exiftool -Title="' + pdfFileName.replace('.pdf', '') + '" ' + pdfFileName)
 
-
-        newInfo = '\n'.join(newInfo)
-        self.string2file(newInfo,infoTmpFile)
-        os.system('pdftk "' + pdfFileName +'" update_info_utf8 ' + infoTmpFile + ' output ' + pdfTmpFile)
-        shutil.move(pdfTmpFile,pdfFileName)
-        os.remove(infoTmpFile)
-        
-                
     def generatePdf(self):
         options = self.options.abcOptions
         abcTmpFile = tempfile.mktemp()
