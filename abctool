@@ -408,7 +408,7 @@ used to display PostScript and abc2abc is used to transpose
         f = open(file,'w')
         f.write(string)
         f.close()
-        
+
     def reencode(self,string):
         print('in reencode')
         try:
@@ -438,9 +438,8 @@ used to display PostScript and abc2abc is used to transpose
             else:
                 print('2else:')
                 string = tmp
-        
         return string
-            
+
     def readFile(self, file):
         nonTuneLines = ''
         try:
@@ -450,8 +449,6 @@ used to display PostScript and abc2abc is used to transpose
         except:
             filecontent = codecs.open(file, "r", "latin-1" ).read()
 
-
-        
         if os.stat(file).st_mtime > self.modTime:
             self.modTime = os.stat(file).st_mtime
         # modTime FIXME
@@ -657,7 +654,7 @@ used to display PostScript and abc2abc is used to transpose
         elif self.options.generateSongbook:
             self.generateSongbook()
             sys.exit()
-            
+
         if not '-h' in sys.argv:
             if len(args) == 0 and not '-i' in sys.argv:
                 print('missing file')
@@ -678,11 +675,6 @@ used to display PostScript and abc2abc is used to transpose
                 else:
                     continue
                     print('file "' + file +'" doesnt exist')
-                    
-
-
-
-
 
     def process(self):
         if self.options.edit:
@@ -768,8 +760,8 @@ used to display PostScript and abc2abc is used to transpose
             f = open(file,"w")
             f.write('')
             f.close() 
-        
-    def searchPath(self,cmdname, path = None):
+
+    def searchPath(self, cmdname, path=None):
         if path is None:
             path = os.environ["PATH"]
 
@@ -916,7 +908,7 @@ used to display PostScript and abc2abc is used to transpose
         basename = basename.replace("'",'')
         return basename
 
-    def ps2pdf(self,ps,pdf):
+    def ps2pdf(self, ps, pdf):
         command = self.getCandidate('gs')
         os.system(command + ' -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sPAPERSIZE=a4 -sOUTPUTFILE=' + pdf + ' ' + ps)
 
@@ -1198,7 +1190,6 @@ used to display PostScript and abc2abc is used to transpose
         os.remove(abcTmpFile)
         os.remove(psTmpFile)
 
-        
     def edit(self):
         psTmpFile = '/tmp/abc.ps'
         editfile = self.getCandidate('editor') + ' %f'
@@ -1208,7 +1199,7 @@ used to display PostScript and abc2abc is used to transpose
                 self.touch(file)
                 os.system('echo %! > ' + psTmpFile)
             files.append(file)
-        
+
         # view
         options = self.options.abcOptions
         gv_view_options = self.options.gvOptions
@@ -1445,18 +1436,14 @@ class abctune:
                    'Cb' : ['Cb','Db','Eb','Fb','Gb','Ab','Bb'],
                    }
 
-
-    
     def __init__(self, string):
         self.abc = string
         self.setVoices()
 
-
-
-    def writeAbcToFile(self,file):
+    def writeAbcToFile(self, file):
         self.writeFile(self.abc,file)
-        
-    def writeFile(self,string,file):
+
+    def writeFile(self, string, file):
         f = open(file,'w')
         f.write(string)
         f.close()
