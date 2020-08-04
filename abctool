@@ -530,12 +530,9 @@ used to display PostScript and abc2abc is used to transpose
             args.reverse()
             for arg in args:
                 sys.argv.insert(1,arg)
-                
 
         except:
             pass
-
-        
 
     def parseOptions(self):
         # show help if no input + if -?
@@ -543,9 +540,8 @@ used to display PostScript and abc2abc is used to transpose
             sys.argv.append('-h')
         elif '-?' in sys.argv:
             sys.argv.remove('-?')
-            sys.argv.append('-h')  
+            sys.argv.append('-h')
 
-            
         self.parseRcFile()
 
         parser = optparse.OptionParser()
@@ -640,7 +636,6 @@ used to display PostScript and abc2abc is used to transpose
         if self.options.stdout:
             self.options.danishChords = False
             self.options.jazzChords = False
-        
         if self.options.changelog:
             self.printChangelog()
             sys.exit()
@@ -915,7 +910,7 @@ used to display PostScript and abc2abc is used to transpose
         os.system(command + ' -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sPAPERSIZE=a4 -sOUTPUTFILE=' + pdf + ' ' + ps)
 
 
-    def abc2ps(self,options):
+    def abc2ps(self, options):
         command = self.getCandidate('abc2ps')
         os.system(command + ' ' + options)
 
@@ -1146,7 +1141,7 @@ used to display PostScript and abc2abc is used to transpose
         f.write(string)
         f.close()
 
-    def addTitleToPdf(self,pdfFileName):
+    def addTitleToPdf(self, pdfFileName):
         path = self.searchPath(external_programs['exiftool'])
         if path == None:
             return
@@ -1477,8 +1472,6 @@ class abctune:
         print(parsedLine)
         sys.exit()
 
-
-
     def generateMidi(self,midiFile):
         abcTmpFile = tempfile.mktemp()
         self.writeAbcToFile(abcTmpFile)
@@ -1597,7 +1590,7 @@ class abctune:
                 lyrics += '\n'
         print(lyrics[:-1])
 
-    def stavesKeepVoices(self,line,voicesToKeep):
+    def stavesKeepVoices(self, line, voicesToKeep):
         cleanup1 = re.compile('\( *\)')
         cleanup2 = re.compile('\{ *\}')
         for voice in self.voices:
@@ -1606,8 +1599,8 @@ class abctune:
         line = cleanup1.sub('',line)
         line = cleanup2.sub('',line)
         return line
-        
-    def keepVoices(self,voicesToKeep):
+
+    def keepVoices(self, voicesToKeep):
         voiceRE = re.compile('\[V\:([^\]]*)\]')
         voiceCleanAfterRE = re.compile('[\] ].*')
         voicesToKeep = voicesToKeep.split(',')
@@ -2432,8 +2425,7 @@ class abctune:
 
         return accidentals + root + octave
 
-
-    def whiteChordRoot(self,root):
+    def whiteChordRoot(self, root):
         result = root
         if root == 'Cbbb':
             result = 'A'
@@ -2443,12 +2435,12 @@ class abctune:
             result = 'B'
         elif root == 'C##':
             result = 'D'
-            
+
         elif root == 'Dbb':
             result = 'C'
         elif root == 'D##':
             result = 'E'
-            
+
         elif root == 'Ebb':
             result = 'D'
         elif root == 'E#':
@@ -2457,7 +2449,7 @@ class abctune:
             result = 'F#'
         elif root == 'E###':
             result = 'G'
-            
+
         elif root == 'Fbbb':
             result = 'D'
         elif root == 'Fbb':
@@ -2466,18 +2458,17 @@ class abctune:
             result = 'E'
         elif root == 'F##':
             result = 'G'
-            
+
         elif root == 'Gbb':
             result = 'F'
         elif root == 'G##':
             result = 'A'
-            
+
         elif root == 'Abb':
             result = 'G'
         elif root == 'A##':
             result = 'B'
-            
-            
+
         elif root == 'Bbb':
             result = 'A'
         elif root == 'B#':
@@ -2487,9 +2478,6 @@ class abctune:
         elif root == 'B###':
             result = 'D'
         return result
-
-
-
 
 
     def whiteChordRootsTune(self):
@@ -2555,17 +2543,8 @@ class abctune:
                         result.append(next)
                         line = line[1:]
         result = ''.join(result)
-
         self.abc = result
-
-
-
-
 
 abc = abctool()
 abc.parseOptions()
 abc.process()
-
-
-
-
